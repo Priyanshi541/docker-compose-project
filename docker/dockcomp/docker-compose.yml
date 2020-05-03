@@ -1,0 +1,17 @@
+version: '3'
+services:
+        datab:
+                image: mysql:5.7
+                environment:
+                        MYSQL_ROOT_PASSWORD: rootpass
+                restart: always
+        server:
+                image: httpd
+                build: ./app
+                depends_on:
+                        - datab
+                restart: always
+                ports:
+                        - 55:80
+
+

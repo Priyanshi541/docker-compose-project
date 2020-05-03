@@ -1,0 +1,33 @@
+version : '3'
+services:
+        wordpressdbb:
+                image: mysql:5.7
+                environment:
+                        MYSQL_ROOT_PASSWORD: rootpass
+                        MYSQL_USER: priyanshi
+                        MYSQL_PASSWORD: redhat
+                        MYSQL_DATABASE: mydbb
+                volumes:
+                        - dbstore:/var/lib/mysql
+                restart: always
+        wpos:
+                image: wordpress:5.1.1
+                environment:
+                        WORDPRESS_DB_HOST: wordpressdbb
+                        WORDPRESS_DB_USER: priyanshi
+                        WORDPRESS_DB_PASSWORD: redhat
+                        WORDPRESS_DB_NAME: mydbb
+                volumes:
+                        - wpstore:/var/www/html
+                ports:
+                        - 51:80
+                          
+                depends_on:
+                        - wordpressdbb
+                restart: always
+
+volumes:
+        wpstore:
+        dbstore:
+
+

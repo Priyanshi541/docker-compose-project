@@ -1,0 +1,31 @@
+version : '3'
+services:
+        joomdb:
+                image: mysql:5.7
+                environment:
+                        MYSQL_ROOT_PASSWORD: rootpass
+                        MYSQL_USER: priyanshi
+                        MYSQL_PASSWORD: redhat
+                        MYSQL_DATABASE: myjoom
+                volumes:
+                        - dbstorage:/var/lib/mysql
+                restart: always
+        joomla:
+                image: joomla:latest
+                restart: always
+                environment:
+                        JOOMLA_DB_HOST: joomdb
+                        JOOMLA_DB_USER: priyanshi
+                        JOOMLA_DB_PASSWORD: redhat
+                        JOOMLA_DB_NAME: myjoom
+                volumes:
+                        - joomstore:/var/www/html
+                ports:
+                                   - 52:80
+                depends_on:
+                        - joomdb
+
+
+volumes:
+        dbstorage:
+        joomstore:

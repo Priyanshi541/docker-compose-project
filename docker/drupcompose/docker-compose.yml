@@ -1,0 +1,32 @@
+version : '3'
+services:
+        drupos:
+                image: mysql:5.7
+                environment:
+                        MYSQL_ROOT_PASSWORD: rootpass
+                        MYSQL_USER: priyanshi
+                        MYSQL_PASSWORD: redhat
+                        MYSQL_DATABASE: mydrup
+                volumes:
+                        - drupstore:/var/lib/mysql
+                restart: always
+        drupal:
+                image: drupal:8
+                restart: always
+                environment:
+                        DRUPAL_DATABASE_HOST: dbos
+                        DRUPAL_DATABASE_USERNAME: priyanshi
+                        DRUPAL_DATABASE_PASSWORD: redhat
+                        DRUPAL_DATABASE_NAME: mydbos
+                volumes:
+                        - drupstorage:/var/www/html
+                ports:
+                        - 53:80
+                depends_on:
+                        - drupos
+
+
+volumes:
+        drupstore:
+        drupstorage:
+
